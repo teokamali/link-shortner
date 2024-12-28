@@ -121,11 +121,7 @@ const Home = () => {
       {shortUrl && (
         <Typography variant="h6" sx={{ mt: 3 }}>
           Short URL:{" "}
-          <a
-            href={`http://${shortUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={shortUrl} target="_blank" rel="noopener noreferrer">
             {shortUrl}
           </a>
         </Typography>
