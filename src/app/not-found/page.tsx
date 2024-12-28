@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Stack, Typography } from "@mui/material";
-
 import LottiePlayer from "react-lottie";
 import Animation from "@/lotties/searching.json";
 import Link from "next/link";
