@@ -2,6 +2,7 @@ import { dbConnect } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/mongodb"; // Import the MongoDB client
 import { generateShortId } from "@/lib/api/randomId";
+import mongoose from "mongoose";
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,7 +27,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert the new link with the unique shortId into the database
-    await linksCollection.insertOne({ shortId, longUrl });
+    await linksCollection.insertOne({
+      shortId,
+      longUrl,
+      created_at: new Date().toISOString(),
+      visitedCounts: 0,
+    });
 
     return NextResponse.json(
       { shortUrl: `${process.env.SHORT_DOMAIN}/${shortId}` },

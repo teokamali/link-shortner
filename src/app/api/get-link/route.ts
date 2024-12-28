@@ -19,7 +19,12 @@ export async function GET(request: NextRequest) {
     const linksCollection = db.collection("links");
 
     // Query the database for the link with the provided shortId
-    const link = await linksCollection.findOne({ shortId });
+
+    const link = await linksCollection.findOneAndUpdate(
+      { shortId },
+      { $inc: { visitedCounts: 1 } }, // Increment visitedCounts by 1
+      { returnDocument: "after" } // Return the updated document
+    );
 
     if (!link) {
       return NextResponse.json({ error: "Link not found." }, { status: 404 });

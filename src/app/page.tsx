@@ -14,6 +14,7 @@ import {
   TableRow,
   TablePagination,
   Stack,
+  Container,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -24,6 +25,8 @@ import {
   getQueryClient,
 } from "@/services";
 import { LinkType } from "@/models/link.model";
+import { ContentCopy, Delete } from "@mui/icons-material";
+import { formatPersianDate } from "@/lib/formatPersianDate";
 
 interface FormValues {
   url: string;
@@ -130,39 +133,41 @@ const Home = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", mt: 5 }}>
-      <Typography variant="h4" gutterBottom>
-        URL Shortener
-      </Typography>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          fullWidth
-          label="Enter Long URL"
-          {...register("url", {
-            required: "URL is required",
-            pattern: {
-              value: pattern,
-              message: "Invalid URL format",
-            },
-          })}
-          error={!!errors.url}
-          helperText={errors.url?.message}
-          margin="normal"
-        />
-        <Button variant="contained" type="submit" fullWidth>
-          Shorten
-        </Button>
-      </form>
-
-      {shortUrl && (
-        <Typography variant="h6" sx={{ mt: 3 }}>
-          Short URL:{" "}
-          <a href={shortUrl} target="_blank" rel="noopener noreferrer">
-            {shortUrl}
-          </a>
+    <Container maxWidth="md">
+      <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", my: 5 }}>
+        <Typography variant="h4" gutterBottom>
+          URL Shortener
         </Typography>
-      )}
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            fullWidth
+            label="Enter Long URL"
+            {...register("url", {
+              required: "URL is required",
+              pattern: {
+                value: pattern,
+                message: "Invalid URL format",
+              },
+            })}
+            error={!!errors.url}
+            helperText={errors.url?.message}
+            margin="normal"
+          />
+          <Button variant="contained" type="submit" fullWidth>
+            ساخت لینک
+          </Button>
+        </form>
+
+        {shortUrl && (
+          <Typography variant="h6" sx={{ mt: 3 }}>
+            Short URL:{" "}
+            <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+              {shortUrl}
+            </a>
+          </Typography>
+        )}
+      </Box>
 
       <TextField
         fullWidth
@@ -171,13 +176,13 @@ const Home = () => {
         onChange={handleSearchChange}
         margin="normal"
       />
-
       {/* Links Table */}
       <Table sx={{ mt: 3 }}>
         <TableHead>
           <TableRow>
             <TableCell>Short ID</TableCell>
             <TableCell>Long URL</TableCell>
+            <TableCell>Visited</TableCell>
             <TableCell>Created At</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
@@ -202,7 +207,8 @@ const Home = () => {
                     {link.longUrl}
                   </a>
                 </TableCell>
-                <TableCell>{link.createdAt}</TableCell>
+                <TableCell>{link.visitedCounts}</TableCell>
+                <TableCell>{formatPersianDate(link.created_at)}</TableCell>
                 <TableCell>
                   <Stack
                     width={"fit-content"}
@@ -216,14 +222,14 @@ const Home = () => {
                       onClick={() => handleDeleteLink(link._id)}
                       sx={{ mr: 1 }}
                     >
-                      Delete
+                      <Delete />
                     </Button>
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="info"
                       onClick={() => handleCopyToClipboard(link.shortId)}
                     >
-                      Copy
+                      <ContentCopy />
                     </Button>
                   </Stack>
                 </TableCell>
@@ -243,7 +249,7 @@ const Home = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Box>
+    </Container>
   );
 };
 
