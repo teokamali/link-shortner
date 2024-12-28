@@ -1,9 +1,13 @@
 "use client";
 
 import { Button, Stack, Typography } from "@mui/material";
-import LottiePlayer from "react-lottie";
+
 import Animation from "@/lotties/searching.json";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const LottiePlayer = dynamic(() => import("react-lottie"), { ssr: false });
+
 export default function NotFound() {
   return (
     <Stack
