@@ -1,1 +1,5 @@
 @import url("react-toastify/dist/ReactToastify.css");
+@import url("../../public/fonts/Dana/fontface.css");
+html body {
+  font-family: Dana;
+}

@@ -13,10 +13,16 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Stack,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AddLinkService, GetLinksList } from "@/services";
+import {
+  AddLinkService,
+  GetLinksList,
+  DeleteLinkService,
+  getQueryClient,
+} from "@/services";
 import { LinkType } from "@/models/link.model";
 
 interface FormValues {
@@ -40,12 +46,24 @@ const Home = () => {
         sortOrder: "asc",
       }),
   });
+  const queryClient = getQueryClient();
+  const { mutate: DeleteMutation } = useMutation({
+    mutationFn: DeleteLinkService,
+    onSuccess(data, variables, context) {
+      toast.success("link Removed");
+      queryClient.refetchQueries({ queryKey: ["get-links-lists"] });
+    },
+    onError(error, variables, context) {
+      toast.error(error.message || "Failed to create short URL.");
+    },
+  });
 
   const { mutate: AddLinkMutate } = useMutation({
     mutationFn: AddLinkService,
     onSuccess(data, variables, context) {
       setShortUrl(data.shortUrl);
       toast.success("Short URL created successfully!");
+      queryClient.refetchQueries({ queryKey: ["get-links-lists"] });
     },
     onError(error, variables, context) {
       toast.error(error.message || "Failed to create short URL.");
@@ -90,6 +108,24 @@ const Home = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
     setPage(0); // Reset to the first page
+  };
+
+  // Handle delete link
+  const handleDeleteLink = (linkId: string) => {
+    DeleteMutation({ _id: linkId });
+  };
+
+  // Handle copy short URL to clipboard
+  const handleCopyToClipboard = (shortUrl: string) => {
+    navigator.clipboard
+      .writeText(`${process.env.SHORT_DOMAIN}/${shortUrl}`)
+      .then(() => {
+        toast.success("Short URL copied to clipboard!");
+      })
+      .catch((err) => {
+        toast.error("Failed to copy the URL.");
+        console.error(err);
+      });
   };
 
   return (
@@ -142,12 +178,13 @@ const Home = () => {
             <TableCell>Short ID</TableCell>
             <TableCell>Long URL</TableCell>
             <TableCell>Created At</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {isLoading ? (
             <TableRow>
-              <TableCell colSpan={3} align="center">
+              <TableCell colSpan={4} align="center">
                 Loading...
               </TableCell>
             </TableRow>
@@ -165,6 +202,30 @@ const Home = () => {
                   </a>
                 </TableCell>
                 <TableCell>{link.createdAt}</TableCell>
+                <TableCell>
+                  <Stack
+                    width={"fit-content"}
+                    direction={"row"}
+                    alignItems={"center"}
+                    gap={2}
+                  >
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDeleteLink(link._id)}
+                      sx={{ mr: 1 }}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleCopyToClipboard(link.shortId)}
+                    >
+                      Copy
+                    </Button>
+                  </Stack>
+                </TableCell>
               </TableRow>
             ))
           )}
