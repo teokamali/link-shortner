@@ -2,6 +2,7 @@ import { buildQuery } from "@/lib/api/buildQuery";
 import client, { dbConnect } from "@/lib/mongodb";
 import { Sort } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
     // Fetch the total count of links that match the search criteria
     const totalCount = await linksCollection.countDocuments(query);
 
-    // Fetch the paginated and sorted links
+    // Fetch the paginated and sorted links with 'created_at' field
     const links = await linksCollection
       .find(query)
       .skip((parsedPage - 1) * parsedLimit) // Paginate based on page and limit
@@ -42,7 +43,7 @@ export async function GET(request: NextRequest) {
       totalCount,
       page: parsedPage,
       limit: parsedLimit,
-      links,
+      links: links,
     });
   } catch (error) {
     console.error("Error in GET handler:", error);

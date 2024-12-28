@@ -46,6 +46,7 @@ const Home = () => {
         sortOrder: "asc",
       }),
   });
+
   const queryClient = getQueryClient();
   const { mutate: DeleteMutation } = useMutation({
     mutationFn: DeleteLinkService,

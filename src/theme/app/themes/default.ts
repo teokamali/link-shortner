@@ -75,7 +75,6 @@ declare module "@mui/material/Typography" {
 }
 
 export const defaultTheme = createTheme({
-  direction: "rtl",
   palette: paletteTheme,
   typography: {
     fontFamily: [DanaFont.style.fontFamily].join(","),

@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="ltr">
       <body>
         <CustomThemeProvider>
           <TanstackQueryProvider>{children}</TanstackQueryProvider>
