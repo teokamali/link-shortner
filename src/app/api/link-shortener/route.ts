@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
 
-    const longUrl = request.nextUrl.searchParams.get("longUrl");
+    const longUrl = request.nextUrl.searchParams.get("url");
     if (!longUrl) {
       return NextResponse.json({ error: "URL is required." }, { status: 400 });
     }

@@ -7,3 +7,10 @@ const LinkSchema = new mongoose.Schema({
 });
 
 export default mongoose.models.Link || mongoose.model("Link", LinkSchema);
+
+export type LinkType = {
+  _id: string;
+  shortId: string;
+  longUrl: string;
+  createdAt: string;
+};
