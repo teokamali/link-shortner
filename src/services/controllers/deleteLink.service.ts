@@ -1,5 +1,5 @@
 import { endpoints } from "@/services/endpoints";
-import postRequest from "../base/post/post-request";
+
 import deleteRequest from "../base/delete/delete-request";
 
 interface DeleteLinkPayload {
