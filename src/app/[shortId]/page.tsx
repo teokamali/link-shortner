@@ -16,28 +16,30 @@ export default function RedirectPage() {
     queryFn: () => GetLink({ shortId: shortId as string }),
   });
 
-  useEffect(() => {
-    if (data) {
-      setTimeout(() => {
-        router.push(data.product_url);
-      }, 3000);
-    }
+  // useEffect(() => {
+  //   if (data) {
+  //     setTimeout(() => {
+  //       router.push(data.product_url);
+  //     }, 3000);
+  //   }
 
-    return () => {};
-  }, [data]);
+  //   return () => {};
+  // }, [data]);
 
   return (
-    <Stack
-      direction={"row"}
-      width={"100%"}
-      height={"80vh"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      <Stack gap={2} alignItems={"center"}>
-        <LottiePlayer />
-        <Typography variant="h5">در حال انتقال به لینک...</Typography>
+    <>
+      <Stack
+        direction={"row"}
+        width={"100%"}
+        height={"80vh"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Stack gap={2} alignItems={"center"}>
+          <LottiePlayer />
+          <Typography variant="h5">در حال انتقال به لینک...</Typography>
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 }
