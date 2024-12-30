@@ -8,8 +8,7 @@ interface GetLinkPayload {
 
 export const GetLink = async (payload: GetLinkPayload) => {
   const response = await getRequest<LinkType, GetLinkPayload>({
-    url: endpoints.get_link,
-    params: payload,
+    url: `${endpoints.short_links}/${payload.shortId}`,
     sendAuthorization: false,
   });
 

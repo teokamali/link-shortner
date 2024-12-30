@@ -1,12 +1,11 @@
 "use client";
-
 import { GetLink } from "@/services";
 import { Stack, Typography } from "@mui/material";
+import { LottiePlayer } from "@/components/LottiePlayer/LottiePlayer";
+import { notFound, redirect, RedirectType, useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { redirect, RedirectType, useParams } from "next/navigation";
 import { useEffect } from "react";
-import LottiePlayer from "react-lottie";
-import Animation from "@/lotties/searching.json";
+
 export default function RedirectPage() {
   const params = useParams();
   const shortId = params.shortId as string;
@@ -15,11 +14,11 @@ export default function RedirectPage() {
     queryKey: ["get-link"],
     queryFn: () => GetLink({ shortId }),
   });
+
   useEffect(() => {
     if (data) {
-      redirect(data.longUrl, RedirectType.replace);
+      redirect(data.product_url, RedirectType.replace);
     }
-
     return () => {};
   }, [data]);
 
@@ -32,15 +31,7 @@ export default function RedirectPage() {
       alignItems={"center"}
     >
       <Stack gap={2} alignItems={"center"}>
-        <LottiePlayer
-          width={300}
-          height={300}
-          options={{
-            animationData: Animation,
-            loop: true,
-            autoplay: true,
-          }}
-        />
+        <LottiePlayer />
         <Typography variant="h5">در حال انتقال به لینک...</Typography>
       </Stack>
     </Stack>
