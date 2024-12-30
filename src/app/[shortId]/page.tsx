@@ -19,7 +19,9 @@ export default async function RedirectPage({
   }
 
   if (data) {
-    // redirect(data.product_url, RedirectType.push);
+    setTimeout(() => {
+      redirect(data.product_url, RedirectType.push);
+    }, 3000);
   }
 
   return (
