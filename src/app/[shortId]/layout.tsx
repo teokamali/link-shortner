@@ -1,11 +1,17 @@
 import { GetLink } from "@/services";
-import React, { PropsWithChildren } from "react";
+import React from "react";
 
-interface Page extends PropsWithChildren {
-  params: { shortId: string };
+interface LayoutProps {
+  params: Promise<{ shortId: string }>;
+
+  children: React.ReactNode;
 }
 
-export async function generateMetadata({ params }: Page) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ shortId: string }>;
+}) {
   const { shortId } = await params;
 
   if (!shortId) {
@@ -38,7 +44,7 @@ export async function generateMetadata({ params }: Page) {
   };
 }
 
-const PageLayout = async ({ params, children }: Page) => {
+const PageLayout = async ({ params, children }: LayoutProps) => {
   return <div>{children}</div>;
 };
 export default PageLayout;
