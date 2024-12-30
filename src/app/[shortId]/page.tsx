@@ -16,15 +16,15 @@ export default function RedirectPage() {
     queryFn: () => GetLink({ shortId: shortId as string }),
   });
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setTimeout(() => {
-  //       router.push(data.product_url);
-  //     }, 3000);
-  //   }
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        router.push(data.product_url);
+      }, 3000);
+    }
 
-  //   return () => {};
-  // }, [data]);
+    return () => {};
+  }, [data]);
 
   return (
     <>
