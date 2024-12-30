@@ -1,26 +1,26 @@
 "use client";
-import { GetLink } from "@/services";
+
 import { Stack, Typography } from "@mui/material";
+
+import { GetLink } from "@/services";
+import { notFound, redirect, RedirectType } from "next/navigation";
+import dynamic from "next/dynamic";
 import { LottiePlayer } from "@/components/LottiePlayer/LottiePlayer";
-import { notFound, redirect, RedirectType, useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
-export default function RedirectPage() {
-  const params = useParams();
-  const shortId = params.shortId as string;
+export default async function RedirectPage({
+  params,
+}: {
+  params: Promise<{ shortId: string }>;
+}) {
+  const { shortId } = await params;
+  const data = await GetLink({ shortId });
+  if (!data) {
+    notFound();
+  }
 
-  const { data } = useQuery({
-    queryKey: ["get-link"],
-    queryFn: () => GetLink({ shortId }),
-  });
-
-  useEffect(() => {
-    if (data) {
-      redirect(data.product_url, RedirectType.replace);
-    }
-    return () => {};
-  }, [data]);
+  if (data) {
+    // redirect(data.product_url, RedirectType.push);
+  }
 
   return (
     <Stack
