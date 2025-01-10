@@ -1,4 +1,5 @@
 import { GetLink } from "@/services";
+import Head from "next/head";
 import React from "react";
 
 interface LayoutProps {
@@ -31,15 +32,15 @@ export async function generateMetadata({
   }
 
   return {
-    title: `Product - ${data.product_title}`,
+    title: `${data.product_title}`,
     description: `${data.product_title} تونوکه | فروشگاه تخصصی لباس زیر`,
     keywords: `product, ${data.product_title}`,
     openGraph: {
-      title: `Product - ${data.product_title}`,
+      title: `${data.product_title}`,
       description: data.product_title || "Explore this product.",
       url: data.product_url,
       images: [{ url: data.product_image_url }],
-      type: "website", // Changed to 'website' to fix the invalid OpenGraph type error
+      type: "website",
     },
   };
 }
