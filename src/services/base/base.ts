@@ -24,6 +24,7 @@ export async function sendRequest<T, D = any>({
     config.headers.set({
       "Content-Type": "application/json",
       Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
       ...config.headers,
       ...headers,
     });
