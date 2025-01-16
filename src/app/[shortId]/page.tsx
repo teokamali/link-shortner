@@ -18,9 +18,7 @@ export default function RedirectPage() {
 
   useEffect(() => {
     if (data) {
-      setTimeout(() => {
-        router.push(data.product_url);
-      }, 3000);
+      window.location.replace(data.original_link);
     }
 
     return () => {};

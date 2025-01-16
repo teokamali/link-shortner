@@ -32,14 +32,14 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${data.product_title}`,
-    description: `${data.product_title} تونوکه | فروشگاه تخصصی لباس زیر`,
-    keywords: `product, ${data.product_title}`,
+    title: `${data.product_name}`,
+    description: `${data.product_name} تونوکه | فروشگاه تخصصی لباس زیر`,
+    keywords: `product, ${data.product_name}`,
     openGraph: {
-      title: `${data.product_title}`,
-      description: data.product_title || "Explore this product.",
-      url: data.product_url,
-      images: [{ url: data.product_image_url }],
+      title: `${data.product_name}`,
+      description: data.product_name || "Explore this product.",
+      url: data.original_link,
+      images: [{ url: data.image_url }],
       type: "website",
     },
   };

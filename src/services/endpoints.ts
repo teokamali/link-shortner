@@ -1,3 +1,4 @@
 export const endpoints = {
-  short_links: 'shortlinks',
+  list: "links",
+  single: "link",
 };

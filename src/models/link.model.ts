@@ -1,8 +1,9 @@
 export type LinkType = {
   id: string;
-  product_id: string;
-  short_code: string;
-  product_title: string;
-  product_url: string;
-  product_image_url: string;
+  product_name: string;
+  original_link: string;
+  shortlink: string;
+  image_url: string;
+  description: string;
+  sku: string;
 };
